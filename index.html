@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,7 +23,7 @@
             margin: 0 auto;
             background: white;
             border-radius: 15px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
             padding: 30px;
         }
 
@@ -54,7 +53,6 @@
             h2 {
                 font-size: 1.2em;
             }
-
         }
 
         .form-section {
@@ -192,7 +190,6 @@
             }
 
             .registro-info {
-                text-align: center;
                 min-width: 100%;
                 margin-bottom: 10px;
             }
@@ -202,7 +199,7 @@
             }
 
             .registro-detalhes {
-                font-size: 0.79em;
+                font-size: 0.85em;
                 line-height: 1.4;
             }
 
@@ -216,20 +213,10 @@
                 border-radius: 5px;
             }
 
-            .container-botoes {
-                display: flex;
-                gap: 5px;
-                /* espaço entre os botões */
+            .btn-edit, .btn-delete {
+                width: 100%;
+                margin: 5px 0 0 0;
             }
-
-            .btn-edit,
-            .btn-delete {
-                position: relative;
-                left: 1%;
-                width: 48%;
-                margin: 0;
-            }
-
         }
 
         .btn-delete {
@@ -261,7 +248,7 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(0,0,0,0.5);
         }
 
         .modal-content {
@@ -271,7 +258,7 @@
             border-radius: 15px;
             width: 90%;
             max-width: 600px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
         }
 
         @media (max-width: 768px) {
@@ -313,29 +300,14 @@
         }
 
         @media (max-width: 768px) {
-
             .export-buttons {
-                display: flex;
-                width: 100%;
-                gap: 10px;
-                flex-direction: row;
+                flex-direction: column;
+                gap: 0;
             }
 
             .export-buttons button {
-                flex: 1;
-                /* cada botão ocupa metade */
-                padding: 12px;
-                font-size: 16px;
+                margin: 5px 0;
             }
-
-            .btn-limpar {
-                display: block;
-                margin: 10px auto 0;
-                /* centraliza */
-                padding: 12px 20px;
-            }
-
-
         }
 
         .total-section {
@@ -349,6 +321,31 @@
             color: #e65100;
         }
 
+        .valor-section {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #2e7d32;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
         h2 {
             color: #667eea;
             margin-bottom: 15px;
@@ -357,58 +354,61 @@
         }
     </style>
 </head>
-
 <body>
     <div class="container">
         <h1>📊 Controle de Carga Horária</h1>
-
+        
+        <div class="form-section">
+            <h2>💰 Valor da Hora</h2>
+            <div class="form-group">
+                <label for="valorHora">Valor por Hora (R$):</label>
+                <input type="number" id="valorHora" step="0.01" min="0" placeholder="Ex: 13,35" style="font-size: 18px; font-weight: bold;">
+            </div>
+        </div>
+        
         <div class="form-section">
             <h2>Registrar Novo Dia</h2>
             <div class="form-group">
                 <label for="data">Data:</label>
                 <input type="date" id="data" required>
             </div>
-
+            
             <div class="time-inputs">
                 <div class="form-group">
                     <label for="entrada">Hora de Entrada:</label>
                     <input type="time" id="entrada" required>
                 </div>
-
+                
                 <div class="form-group">
                     <label for="saida">Hora de Saída:</label>
                     <input type="time" id="saida" required>
                 </div>
-
+                
                 <div class="form-group">
                     <label for="almoco">Intervalo Almoço (min):</label>
                     <input type="time" id="almoco" value="01:00">
                 </div>
-
+                
                 <div class="form-group">
                     <label for="cafe">Intervalo Café (min):</label>
                     <input type="time" id="cafe" value="00:15">
                 </div>
             </div>
-
+            
             <button onclick="calcularHoras()">Calcular e Salvar</button>
-
+            
             <div id="resultado" class="result" style="display:none;"></div>
         </div>
-
+        
         <div class="registros">
             <h2>Registros Salvos</h2>
             <div class="export-buttons">
-                <button onclick="exportarTXT()">📥 Exportar</button>
-                <button onclick="importarTXT()">📤 Importar</button>
-                <button onclick="limparTodos()" class="btn-delete btn-limpar">
-                🗑️ Limpar Todos
-            </button>
+                <button onclick="exportarTXT()">📥 Exportar TXT</button>
+                <button onclick="importarTXT()">📤 Importar TXT</button>
+                <button onclick="limparTodos()" class="btn-delete">🗑️ Limpar Todos</button>
             </div>
-
-
             <input type="file" id="fileInput" accept=".txt" style="display:none;" onchange="processarImportacao(event)">
-
+            
             <div id="totalHoras" class="total-section" style="display:none;"></div>
             <div id="listaRegistros"></div>
         </div>
@@ -426,29 +426,29 @@
                     <label for="editData">Data:</label>
                     <input type="date" id="editData" required>
                 </div>
-
+                
                 <div class="time-inputs">
                     <div class="form-group">
                         <label for="editEntrada">Hora de Entrada:</label>
                         <input type="time" id="editEntrada" required>
                     </div>
-
+                    
                     <div class="form-group">
                         <label for="editSaida">Hora de Saída:</label>
                         <input type="time" id="editSaida" required>
                     </div>
-
+                    
                     <div class="form-group">
                         <label for="editAlmoco">Intervalo Almoço:</label>
                         <input type="time" id="editAlmoco">
                     </div>
-
+                    
                     <div class="form-group">
                         <label for="editCafe">Intervalo Café:</label>
                         <input type="time" id="editCafe">
                     </div>
                 </div>
-
+                
                 <button onclick="salvarEdicao()">💾 Salvar Alterações</button>
                 <button onclick="fecharModal()" style="background: #999;">Cancelar</button>
             </div>
@@ -462,17 +462,17 @@
         // Inicializar IndexedDB
         const request = indexedDB.open('ControleHorasDB', 1);
 
-        request.onerror = function () {
+        request.onerror = function() {
             console.error('Erro ao abrir banco de dados');
         };
 
-        request.onsuccess = function (event) {
+        request.onsuccess = function(event) {
             db = event.target.result;
             carregarRegistros();
             carregarUltimosValores();
         };
 
-        request.onupgradeneeded = function (event) {
+        request.onupgradeneeded = function(event) {
             db = event.target.result;
             const objectStore = db.createObjectStore('registros', { keyPath: 'id', autoIncrement: true });
             objectStore.createIndex('data', 'data', { unique: false });
@@ -487,11 +487,13 @@
             const ultimaSaida = localStorage.getItem('ultimaSaida');
             const ultimoAlmoco = localStorage.getItem('ultimoAlmoco');
             const ultimoCafe = localStorage.getItem('ultimoCafe');
+            const valorHora = localStorage.getItem('valorHora');
 
             if (ultimaEntrada) document.getElementById('entrada').value = ultimaEntrada;
             if (ultimaSaida) document.getElementById('saida').value = ultimaSaida;
             if (ultimoAlmoco) document.getElementById('almoco').value = ultimoAlmoco;
             if (ultimoCafe) document.getElementById('cafe').value = ultimoCafe;
+            if (valorHora) document.getElementById('valorHora').value = valorHora;
         }
 
         // Salvar valores no localStorage
@@ -501,6 +503,12 @@
             localStorage.setItem('ultimoAlmoco', almoco);
             localStorage.setItem('ultimoCafe', cafe);
         }
+
+        // Salvar valor da hora
+        document.getElementById('valorHora').addEventListener('change', function() {
+            localStorage.setItem('valorHora', this.value);
+            carregarRegistros(); // Atualizar exibição com novo valor
+        });
 
         function timeToMinutes(time) {
             const [hours, minutes] = time.split(':').map(Number);
@@ -556,8 +564,16 @@
             salvarRegistro(registro);
 
             document.getElementById('resultado').style.display = 'block';
-            document.getElementById('resultado').innerHTML =
+            document.getElementById('resultado').innerHTML = 
                 `✅ Horas Trabalhadas: <strong>${horasFormatadas}</strong>`;
+            
+            // Mostrar valor a receber se houver valor/hora definido
+            const valorHora = parseFloat(document.getElementById('valorHora').value) || 0;
+            if (valorHora > 0) {
+                const valorReceber = (horasTrabalhadas / 60) * valorHora;
+                document.getElementById('resultado').innerHTML += 
+                    `<br>💰 Valor do Dia: <strong>R$ ${valorReceber.toFixed(2)}</strong>`;
+            }
         }
 
         function salvarRegistro(registro) {
@@ -565,11 +581,11 @@
             const objectStore = transaction.objectStore('registros');
             const request = objectStore.add(registro);
 
-            request.onsuccess = function () {
+            request.onsuccess = function() {
                 carregarRegistros();
             };
 
-            request.onerror = function () {
+            request.onerror = function() {
                 alert('Erro ao salvar registro!');
             };
         }
@@ -579,7 +595,7 @@
             const objectStore = transaction.objectStore('registros');
             const request = objectStore.getAll();
 
-            request.onsuccess = function (event) {
+            request.onsuccess = function(event) {
                 const registros = event.target.result;
                 exibirRegistros(registros);
             };
@@ -598,9 +614,11 @@
             registros.sort((a, b) => new Date(b.data) - new Date(a.data));
 
             let totalMinutos = 0;
+            const valorHora = parseFloat(localStorage.getItem('valorHora')) || 0;
 
             registros.forEach(reg => {
                 totalMinutos += reg.totalMinutos;
+                const valorDia = (reg.totalMinutos / 60) * valorHora;
 
                 const div = document.createElement('div');
                 div.className = 'registro-item';
@@ -610,22 +628,28 @@
                             ${new Date(reg.data + 'T00:00:00').toLocaleDateString('pt-BR')} - ${reg.diaSemana.toUpperCase()}
                         </div>
                         <div class="registro-detalhes">
-                            Entrada: ${reg.entrada} | Almoço: ${reg.almoco} | Café: ${reg.cafe} | Saída: ${reg.saida}
+                            Entrada: ${reg.entrada} | Saída: ${reg.saida} | Almoço: ${reg.almoco} | Café: ${reg.cafe}
                         </div>
+                        ${valorHora > 0 ? `<div class="registro-detalhes" style="color: #2e7d32; font-weight: bold; margin-top: 5px;">💵 R$ ${valorDia.toFixed(2)}</div>` : ''}
                     </div>
                     <div class="registro-horas">${reg.horasTrabalhadas}</div>
-                    <div class"container-botoes">
                     <button class="btn-edit" onclick="abrirModalEdicao(${reg.id})">Editar</button>
                     <button class="btn-delete" onclick="deletarRegistro(${reg.id})">Deletar</button>
-                    </div>
                 `;
                 lista.appendChild(div);
             });
 
             const totalFormatado = minutesToTime(totalMinutos);
+            const valorTotal = (totalMinutos / 60) * valorHora;
+            
             document.getElementById('totalHoras').style.display = 'block';
-            document.getElementById('totalHoras').innerHTML =
-                `Total de Horas Trabalhadas: <strong>${totalFormatado}</strong> (${registros.length} dias)`;
+            let htmlTotal = `Total de Horas Trabalhadas: <strong>${totalFormatado}</strong> (${registros.length} dias)`;
+            
+            if (valorHora > 0) {
+                htmlTotal += `<div class="valor-section" style="margin-top: 10px;">💰 Total a Receber: R$ ${valorTotal.toFixed(2)}</div>`;
+            }
+            
+            document.getElementById('totalHoras').innerHTML = htmlTotal;
         }
 
         function deletarRegistro(id) {
@@ -635,7 +659,7 @@
             const objectStore = transaction.objectStore('registros');
             const request = objectStore.delete(id);
 
-            request.onsuccess = function () {
+            request.onsuccess = function() {
                 carregarRegistros();
             };
         }
@@ -647,7 +671,7 @@
             const objectStore = transaction.objectStore('registros');
             const request = objectStore.clear();
 
-            request.onsuccess = function () {
+            request.onsuccess = function() {
                 carregarRegistros();
                 alert('Todos os registros foram deletados!');
             };
@@ -658,10 +682,17 @@
             const objectStore = transaction.objectStore('registros');
             const request = objectStore.getAll();
 
-            request.onsuccess = function (event) {
+            request.onsuccess = function(event) {
                 const registros = event.target.result;
+                const valorHora = parseFloat(localStorage.getItem('valorHora')) || 0;
+                
                 let conteudo = 'CONTROLE DE CARGA HORÁRIA\n';
-                conteudo += '='.repeat(80) + '\n\n';
+                conteudo += '='.repeat(80) + '\n';
+                if (valorHora > 0) {
+                    conteudo += `Valor por Hora: R$ ${valorHora.toFixed(2)}\n`;
+                    conteudo += '='.repeat(80) + '\n';
+                }
+                conteudo += '\n';
 
                 registros.sort((a, b) => new Date(a.data) - new Date(b.data));
 
@@ -669,15 +700,25 @@
 
                 registros.forEach(reg => {
                     totalMinutos += reg.totalMinutos;
+                    const valorDia = valorHora > 0 ? (reg.totalMinutos / 60) * valorHora : 0;
+                    
                     conteudo += `Data: ${new Date(reg.data + 'T00:00:00').toLocaleDateString('pt-BR')} (${reg.diaSemana})\n`;
                     conteudo += `Entrada: ${reg.entrada} | Saída: ${reg.saida}\n`;
                     conteudo += `Almoço: ${reg.almoco} | Café: ${reg.cafe}\n`;
                     conteudo += `Horas Trabalhadas: ${reg.horasTrabalhadas}\n`;
+                    if (valorHora > 0) {
+                        conteudo += `Valor do Dia: R$ ${valorDia.toFixed(2)}\n`;
+                    }
                     conteudo += '-'.repeat(80) + '\n';
                 });
 
+                const valorTotal = (totalMinutos / 60) * valorHora;
+                
                 conteudo += '\n' + '='.repeat(80) + '\n';
                 conteudo += `TOTAL DE HORAS: ${minutesToTime(totalMinutos)} (${registros.length} dias)\n`;
+                if (valorHora > 0) {
+                    conteudo += `TOTAL A RECEBER: R$ ${valorTotal.toFixed(2)}\n`;
+                }
 
                 const blob = new Blob([conteudo], { type: 'text/plain' });
                 const url = URL.createObjectURL(blob);
@@ -698,22 +739,22 @@
             if (!file) return;
 
             const reader = new FileReader();
-            reader.onload = function (e) {
+            reader.onload = function(e) {
                 const conteudo = e.target.result;
                 const linhas = conteudo.split('\n');
-
+                
                 const transaction = db.transaction(['registros'], 'readwrite');
                 const objectStore = transaction.objectStore('registros');
 
                 let i = 0;
                 while (i < linhas.length) {
                     const linha = linhas[i];
-
+                    
                     if (linha.startsWith('Data: ')) {
                         try {
                             const dataMatch = linha.match(/Data: (\d{2}\/\d{2}\/\d{4})/);
                             const diaSemanaMatch = linha.match(/\((.+)\)/);
-
+                            
                             const entradaSaidaLinha = linhas[i + 1];
                             const almoçoCafeLinha = linhas[i + 2];
                             const horasLinha = linhas[i + 3];
@@ -729,7 +770,7 @@
                                 const dataISO = `${ano}-${mes}-${dia}`;
 
                                 const horasTrabalhadas = horasMatch ? horasMatch[1] : '00:00';
-
+                                
                                 const registro = {
                                     data: dataISO,
                                     diaSemana: diaSemanaMatch ? diaSemanaMatch[1] : '',
@@ -746,14 +787,14 @@
                         } catch (error) {
                             console.error('Erro ao processar linha:', error);
                         }
-
+                        
                         i += 4;
                     } else {
                         i++;
                     }
                 }
 
-                transaction.oncomplete = function () {
+                transaction.oncomplete = function() {
                     carregarRegistros();
                     alert('Importação concluída com sucesso!');
                 };
@@ -765,12 +806,12 @@
         // Funções do Modal de Edição
         function abrirModalEdicao(id) {
             registroEditandoId = id;
-
+            
             const transaction = db.transaction(['registros'], 'readonly');
             const objectStore = transaction.objectStore('registros');
             const request = objectStore.get(id);
 
-            request.onsuccess = function (event) {
+            request.onsuccess = function(event) {
                 const registro = event.target.result;
                 if (registro) {
                     document.getElementById('editData').value = registro.data;
@@ -778,7 +819,7 @@
                     document.getElementById('editSaida').value = registro.saida;
                     document.getElementById('editAlmoco').value = registro.almoco;
                     document.getElementById('editCafe').value = registro.cafe;
-
+                    
                     document.getElementById('modalEdicao').style.display = 'block';
                 }
             };
@@ -831,19 +872,19 @@
             const objectStore = transaction.objectStore('registros');
             const request = objectStore.put(registroAtualizado);
 
-            request.onsuccess = function () {
+            request.onsuccess = function() {
                 fecharModal();
                 carregarRegistros();
                 alert('Registro atualizado com sucesso!');
             };
 
-            request.onerror = function () {
+            request.onerror = function() {
                 alert('Erro ao atualizar registro!');
             };
         }
 
         // Fechar modal ao clicar fora dele
-        window.onclick = function (event) {
+        window.onclick = function(event) {
             const modal = document.getElementById('modalEdicao');
             if (event.target == modal) {
                 fecharModal();
@@ -851,5 +892,4 @@
         }
     </script>
 </body>
-
 </html>
