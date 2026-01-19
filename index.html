@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,7 +24,7 @@
             margin: 0 auto;
             background: white;
             border-radius: 15px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
             padding: 30px;
         }
 
@@ -57,9 +58,9 @@
 
         .form-section {
             background: #f8f9fa;
-            padding: 20px;
+            padding: 5px;
             border-radius: 10px;
-            margin-bottom: 30px;
+            margin-bottom: 10px;
         }
 
         .form-group {
@@ -128,7 +129,7 @@
                 padding: 12px 15px;
                 font-size: 14px;
                 margin-right: 5px;
-                margin-top: 7px;
+                margin-top: 8px;
             }
         }
 
@@ -199,7 +200,7 @@
             }
 
             .registro-detalhes {
-                font-size: 0.85em;
+                font-size: 0.79em;
                 line-height: 1.4;
             }
 
@@ -213,7 +214,8 @@
                 border-radius: 5px;
             }
 
-            .btn-edit, .btn-delete {
+            .btn-edit,
+            .btn-delete {
                 display: inline-block;
                 width: calc(50% - 3px);
                 margin: 5px 0 0 0;
@@ -255,7 +257,7 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.5);
+            background-color: rgba(0, 0, 0, 0.5);
         }
 
         .modal-content {
@@ -265,7 +267,7 @@
             border-radius: 15px;
             width: 90%;
             max-width: 600px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
         }
 
         @media (max-width: 768px) {
@@ -312,6 +314,41 @@
             color: #333;
         }
 
+        .collapsible-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+            padding: 10px 0;
+        }
+
+        .collapsible-header:hover h2 {
+            color: #764ba2;
+        }
+
+        .arrow {
+            font-size: 1.5em;
+            transition: transform 0.3s ease;
+            color: #667eea;
+        }
+
+        .arrow.expanded {
+            transform: rotate(180deg);
+        }
+
+        .collapsible-content {
+            display: none;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .collapsible-content.expanded {
+            max-height: 2000px;
+            display: block;
+        }
+
         .export-buttons {
             display: flex;
             gap: 10px;
@@ -335,7 +372,7 @@
             background: #fff3e0;
             padding: 15px;
             border-radius: 8px;
-            margin-top: 20px;
+            margin-top: 10px;
             text-align: center;
             font-size: 1.3em;
             font-weight: bold;
@@ -377,7 +414,7 @@
 
         input[type="number"] {
             width: 100%;
-            padding: 10px;
+            padding: 5px;
             border: 2px solid #ddd;
             border-radius: 5px;
             font-size: 16px;
@@ -397,69 +434,90 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>📊 Controle de Carga Horária</h1>
-        
+
         <div class="form-section">
             <h2>💰 Configurações Financeiras</h2>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                <div class="form-group">
-                    <label for="valorHora">Valor por Hora (R$):</label>
-                    <input type="number" id="valorHora" step="0.01" min="0" placeholder="Ex: 13,35" style="font-size: 18px; font-weight: bold;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; align-items: end;">
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label for="valorHora">Valor Hora (R$):</label>
+                    <input type="number" id="valorHora" step="0.01" min="0" placeholder="Ex: 13,35"
+                        style="font-size: 18px; font-weight: bold;">
                 </div>
-                <div class="form-group">
+                <div class="form-group" style="margin-bottom: 0;">
                     <label for="valorVale">Adiantamento (R$):</label>
-                    <input type="number" id="valorVale" step="0.01" min="0" placeholder="Ex: 500,00" style="font-size: 18px; font-weight: bold; color: #f44336;">
+                    <input type="number" id="valorVale" step="0.01" min="0" placeholder="Ex: 500,00"
+                        style="font-size: 18px; font-weight: bold; color: #f44336;">
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label for="saldoAnterior">Saldo - ou + (R$):</label>
+                    <input type="number" id="saldoAnterior" step="0.01" placeholder="Ex: 150,00"
+                        style="font-size: 18px; font-weight: bold; color: #1565c0;">
                 </div>
             </div>
         </div>
-        
+
         <div class="form-section">
-            <h2>Registrar Novo Dia</h2>
-            <div class="form-group">
-                <label for="data">Data:</label>
-                <input type="date" id="data" required>
+            <div class="collapsible-header" onclick="toggleCollapse('formRegistro')">
+                <h2>Registrar Novo Dia</h2>
+                <span class="arrow" id="arrow-formRegistro">▼</span>
             </div>
-            
-            <div class="time-inputs">
+            <div class="collapsible-content" id="formRegistro">
                 <div class="form-group">
-                    <label for="entrada">Hora de Entrada:</label>
-                    <input type="time" id="entrada" required>
+                    <label for="data">Data:</label>
+                    <input type="date" id="data" required>
                 </div>
-                
-                <div class="form-group">
-                    <label for="saida">Hora de Saída:</label>
-                    <input type="time" id="saida" required>
+
+                <div class="time-inputs">
+                    <div class="form-group">
+                        <label for="entrada">Hora de Entrada:</label>
+                        <input type="time" id="entrada" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="saida">Hora de Saída:</label>
+                        <input type="time" id="saida" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="almoco">Intervalo Almoço (min):</label>
+                        <input type="time" id="almoco" value="01:00">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cafe">Intervalo Café (min):</label>
+                        <input type="time" id="cafe" value="00:15">
+                    </div>
                 </div>
-                
-                <div class="form-group">
-                    <label for="almoco">Intervalo Almoço (min):</label>
-                    <input type="time" id="almoco" value="01:00">
-                </div>
-                
-                <div class="form-group">
-                    <label for="cafe">Intervalo Café (min):</label>
-                    <input type="time" id="cafe" value="00:15">
-                </div>
+
+                <button onclick="calcularHoras()">Calcular e Salvar</button>
+
+                <div id="resultado" class="result" style="display:none;"></div>
             </div>
-            
-            <button onclick="calcularHoras()">Calcular e Salvar</button>
-            
-            <div id="resultado" class="result" style="display:none;"></div>
         </div>
-        
+        <div id="totalHoras" class="total-section" style="display:none;"></div>
+
         <div class="registros">
-            <h2>Registros Salvos</h2>
-            <div class="export-buttons">
-                <button onclick="exportarTXT()">📥 Exportar TXT</button>
-                <button onclick="importarTXT()">📤 Importar TXT</button>
-                <button onclick="limparTodos()" class="btn-delete">🗑️ Limpar Todos</button>
+            <div class="collapsible-header" onclick="toggleCollapse('registrosSalvos')">
+                <h2>Registros Salvos</h2>
+                <span class="arrow" id="arrow-registrosSalvos">▼</span>
             </div>
-            <input type="file" id="fileInput" accept=".txt" style="display:none;" onchange="processarImportacao(event)">
-            
-            <div id="totalHoras" class="total-section" style="display:none;"></div>
-            <div id="listaRegistros"></div>
+            <div class="collapsible-content" id="registrosSalvos">
+
+                <input type="file" id="fileInput" accept=".txt" style="display:none;"
+                    onchange="processarImportacao(event)">
+
+
+                <div id="listaRegistros"></div>
+            </div>
+        </div>
+        <div class="export-buttons">
+            <button onclick="exportarTXT()">📥 Exportar TXT</button>
+            <button onclick="importarTXT()">📤 Importar TXT</button>
+            <button onclick="limparTodos()" class="btn-delete">🗑️ Limpar Todos</button>
         </div>
     </div>
 
@@ -475,29 +533,29 @@
                     <label for="editData">Data:</label>
                     <input type="date" id="editData" required>
                 </div>
-                
+
                 <div class="time-inputs">
                     <div class="form-group">
                         <label for="editEntrada">Hora de Entrada:</label>
                         <input type="time" id="editEntrada" required>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="editSaida">Hora de Saída:</label>
                         <input type="time" id="editSaida" required>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="editAlmoco">Intervalo Almoço:</label>
                         <input type="time" id="editAlmoco">
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="editCafe">Intervalo Café:</label>
                         <input type="time" id="editCafe">
                     </div>
                 </div>
-                
+
                 <button onclick="salvarEdicao()">💾 Salvar Alterações</button>
                 <button onclick="fecharModal()" style="background: #999;">Cancelar</button>
             </div>
@@ -511,17 +569,17 @@
         // Inicializar IndexedDB
         const request = indexedDB.open('ControleHorasDB', 1);
 
-        request.onerror = function() {
+        request.onerror = function () {
             console.error('Erro ao abrir banco de dados');
         };
 
-        request.onsuccess = function(event) {
+        request.onsuccess = function (event) {
             db = event.target.result;
             carregarRegistros();
             carregarUltimosValores();
         };
 
-        request.onupgradeneeded = function(event) {
+        request.onupgradeneeded = function (event) {
             db = event.target.result;
             const objectStore = db.createObjectStore('registros', { keyPath: 'id', autoIncrement: true });
             objectStore.createIndex('data', 'data', { unique: false });
@@ -538,6 +596,7 @@
             const ultimoCafe = localStorage.getItem('ultimoCafe');
             const valorHora = localStorage.getItem('valorHora');
             const valorVale = localStorage.getItem('valorVale');
+            const saldoAnterior = localStorage.getItem('saldoAnterior');
 
             if (ultimaEntrada) document.getElementById('entrada').value = ultimaEntrada;
             if (ultimaSaida) document.getElementById('saida').value = ultimaSaida;
@@ -545,6 +604,7 @@
             if (ultimoCafe) document.getElementById('cafe').value = ultimoCafe;
             if (valorHora) document.getElementById('valorHora').value = valorHora;
             if (valorVale) document.getElementById('valorVale').value = valorVale;
+            if (saldoAnterior) document.getElementById('saldoAnterior').value = saldoAnterior;
         }
 
         // Salvar valores no localStorage
@@ -556,14 +616,20 @@
         }
 
         // Salvar valor da hora
-        document.getElementById('valorHora').addEventListener('change', function() {
+        document.getElementById('valorHora').addEventListener('change', function () {
             localStorage.setItem('valorHora', this.value);
             carregarRegistros(); // Atualizar exibição com novo valor
         });
 
         // Salvar valor do vale
-        document.getElementById('valorVale').addEventListener('change', function() {
+        document.getElementById('valorVale').addEventListener('change', function () {
             localStorage.setItem('valorVale', this.value);
+            carregarRegistros(); // Atualizar exibição com novo valor
+        });
+
+        // Salvar saldo anterior
+        document.getElementById('saldoAnterior').addEventListener('change', function () {
+            localStorage.setItem('saldoAnterior', this.value);
             carregarRegistros(); // Atualizar exibição com novo valor
         });
 
@@ -621,14 +687,14 @@
             salvarRegistro(registro);
 
             document.getElementById('resultado').style.display = 'block';
-            document.getElementById('resultado').innerHTML = 
+            document.getElementById('resultado').innerHTML =
                 `✅ Horas Trabalhadas: <strong>${horasFormatadas}</strong>`;
-            
+
             // Mostrar valor a receber se houver valor/hora definido
             const valorHora = parseFloat(document.getElementById('valorHora').value) || 0;
             if (valorHora > 0) {
                 const valorReceber = (horasTrabalhadas / 60) * valorHora;
-                document.getElementById('resultado').innerHTML += 
+                document.getElementById('resultado').innerHTML +=
                     `<br>💰 Valor do Dia: <strong>R$ ${valorReceber.toFixed(2)}</strong>`;
             }
         }
@@ -638,11 +704,11 @@
             const objectStore = transaction.objectStore('registros');
             const request = objectStore.add(registro);
 
-            request.onsuccess = function() {
+            request.onsuccess = function () {
                 carregarRegistros();
             };
 
-            request.onerror = function() {
+            request.onerror = function () {
                 alert('Erro ao salvar registro!');
             };
         }
@@ -652,7 +718,7 @@
             const objectStore = transaction.objectStore('registros');
             const request = objectStore.getAll();
 
-            request.onsuccess = function(event) {
+            request.onsuccess = function (event) {
                 const registros = event.target.result;
                 exibirRegistros(registros);
             };
@@ -701,20 +767,30 @@
             const totalFormatado = minutesToTime(totalMinutos);
             const valorTotal = (totalMinutos / 60) * valorHora;
             const valorVale = parseFloat(localStorage.getItem('valorVale')) || 0;
-            const valorLiquido = valorTotal - valorVale;
-            
+            const saldoAnterior = parseFloat(localStorage.getItem('saldoAnterior')) || 0;
+            const valorLiquido = valorTotal - valorVale + saldoAnterior;
+
             document.getElementById('totalHoras').style.display = 'block';
             let htmlTotal = `Total de Horas Trabalhadas: <strong>${totalFormatado}</strong> (${registros.length} dias)`;
-            
+
             if (valorHora > 0) {
                 htmlTotal += `<div class="valor-section" style="margin-top: 10px;">💰 Total a Receber: R$ ${valorTotal.toFixed(2)}</div>`;
-                
+
+                if (saldoAnterior !== 0) {
+                    const corSaldo = saldoAnterior > 0 ? '#1565c0' : '#c62828';
+                    const sinalSaldo = saldoAnterior > 0 ? '➕' : '➖';
+                    htmlTotal += `<div style="background: ${saldoAnterior > 0 ? '#e3f2fd' : '#ffebee'}; padding: 15px; border-radius: 8px; margin-top: 10px; text-align: center; font-size: 1.1em; font-weight: bold; color: ${corSaldo};">${sinalSaldo} Saldo Anterior: R$ ${Math.abs(saldoAnterior).toFixed(2)}</div>`;
+                }
+
                 if (valorVale > 0) {
                     htmlTotal += `<div class="vale-section">➖ Vale/Adiantamento: R$ ${valorVale.toFixed(2)}</div>`;
+                }
+
+                if (valorVale > 0 || saldoAnterior !== 0) {
                     htmlTotal += `<div class="liquido-section">💵 Valor Líquido: R$ ${valorLiquido.toFixed(2)}</div>`;
                 }
             }
-            
+
             document.getElementById('totalHoras').innerHTML = htmlTotal;
         }
 
@@ -725,7 +801,7 @@
             const objectStore = transaction.objectStore('registros');
             const request = objectStore.delete(id);
 
-            request.onsuccess = function() {
+            request.onsuccess = function () {
                 carregarRegistros();
             };
         }
@@ -737,7 +813,7 @@
             const objectStore = transaction.objectStore('registros');
             const request = objectStore.clear();
 
-            request.onsuccess = function() {
+            request.onsuccess = function () {
                 carregarRegistros();
                 alert('Todos os registros foram deletados!');
             };
@@ -748,11 +824,12 @@
             const objectStore = transaction.objectStore('registros');
             const request = objectStore.getAll();
 
-            request.onsuccess = function(event) {
+            request.onsuccess = function (event) {
                 const registros = event.target.result;
                 const valorHora = parseFloat(localStorage.getItem('valorHora')) || 0;
                 const valorVale = parseFloat(localStorage.getItem('valorVale')) || 0;
-                
+                const saldoAnterior = parseFloat(localStorage.getItem('saldoAnterior')) || 0;
+
                 let conteudo = 'CONTROLE DE CARGA HORÁRIA\n';
                 conteudo += '='.repeat(80) + '\n';
                 if (valorHora > 0) {
@@ -760,6 +837,9 @@
                 }
                 if (valorVale > 0) {
                     conteudo += `Vale/Adiantamento: R$ ${valorVale.toFixed(2)}\n`;
+                }
+                if (saldoAnterior !== 0) {
+                    conteudo += `Saldo Anterior: R$ ${saldoAnterior.toFixed(2)}\n`;
                 }
                 conteudo += '='.repeat(80) + '\n';
                 conteudo += '\n';
@@ -771,7 +851,7 @@
                 registros.forEach(reg => {
                     totalMinutos += reg.totalMinutos;
                     const valorDia = valorHora > 0 ? (reg.totalMinutos / 60) * valorHora : 0;
-                    
+
                     conteudo += `Data: ${new Date(reg.data + 'T00:00:00').toLocaleDateString('pt-BR')} (${reg.diaSemana})\n`;
                     conteudo += `Entrada: ${reg.entrada} | Saída: ${reg.saida}\n`;
                     conteudo += `Almoço: ${reg.almoco} | Café: ${reg.cafe}\n`;
@@ -783,14 +863,19 @@
                 });
 
                 const valorTotal = (totalMinutos / 60) * valorHora;
-                const valorLiquido = valorTotal - valorVale;
-                
+                const valorLiquido = valorTotal - valorVale + saldoAnterior;
+
                 conteudo += '\n' + '='.repeat(80) + '\n';
                 conteudo += `TOTAL DE HORAS: ${minutesToTime(totalMinutos)} (${registros.length} dias)\n`;
                 if (valorHora > 0) {
                     conteudo += `TOTAL A RECEBER: R$ ${valorTotal.toFixed(2)}\n`;
+                    if (saldoAnterior !== 0) {
+                        conteudo += `SALDO ANTERIOR: R$ ${saldoAnterior.toFixed(2)}\n`;
+                    }
                     if (valorVale > 0) {
                         conteudo += `VALE/ADIANTAMENTO: R$ ${valorVale.toFixed(2)}\n`;
+                    }
+                    if (valorVale > 0 || saldoAnterior !== 0) {
                         conteudo += `VALOR LÍQUIDO: R$ ${valorLiquido.toFixed(2)}\n`;
                     }
                 }
@@ -814,22 +899,22 @@
             if (!file) return;
 
             const reader = new FileReader();
-            reader.onload = function(e) {
+            reader.onload = function (e) {
                 const conteudo = e.target.result;
                 const linhas = conteudo.split('\n');
-                
+
                 const transaction = db.transaction(['registros'], 'readwrite');
                 const objectStore = transaction.objectStore('registros');
 
                 let i = 0;
                 while (i < linhas.length) {
                     const linha = linhas[i];
-                    
+
                     if (linha.startsWith('Data: ')) {
                         try {
                             const dataMatch = linha.match(/Data: (\d{2}\/\d{2}\/\d{4})/);
                             const diaSemanaMatch = linha.match(/\((.+)\)/);
-                            
+
                             const entradaSaidaLinha = linhas[i + 1];
                             const almoçoCafeLinha = linhas[i + 2];
                             const horasLinha = linhas[i + 3];
@@ -845,7 +930,7 @@
                                 const dataISO = `${ano}-${mes}-${dia}`;
 
                                 const horasTrabalhadas = horasMatch ? horasMatch[1] : '00:00';
-                                
+
                                 const registro = {
                                     data: dataISO,
                                     diaSemana: diaSemanaMatch ? diaSemanaMatch[1] : '',
@@ -862,14 +947,14 @@
                         } catch (error) {
                             console.error('Erro ao processar linha:', error);
                         }
-                        
+
                         i += 4;
                     } else {
                         i++;
                     }
                 }
 
-                transaction.oncomplete = function() {
+                transaction.oncomplete = function () {
                     carregarRegistros();
                     alert('Importação concluída com sucesso!');
                 };
@@ -881,12 +966,12 @@
         // Funções do Modal de Edição
         function abrirModalEdicao(id) {
             registroEditandoId = id;
-            
+
             const transaction = db.transaction(['registros'], 'readonly');
             const objectStore = transaction.objectStore('registros');
             const request = objectStore.get(id);
 
-            request.onsuccess = function(event) {
+            request.onsuccess = function (event) {
                 const registro = event.target.result;
                 if (registro) {
                     document.getElementById('editData').value = registro.data;
@@ -894,7 +979,7 @@
                     document.getElementById('editSaida').value = registro.saida;
                     document.getElementById('editAlmoco').value = registro.almoco;
                     document.getElementById('editCafe').value = registro.cafe;
-                    
+
                     document.getElementById('modalEdicao').style.display = 'block';
                 }
             };
@@ -947,24 +1032,34 @@
             const objectStore = transaction.objectStore('registros');
             const request = objectStore.put(registroAtualizado);
 
-            request.onsuccess = function() {
+            request.onsuccess = function () {
                 fecharModal();
                 carregarRegistros();
                 alert('Registro atualizado com sucesso!');
             };
 
-            request.onerror = function() {
+            request.onerror = function () {
                 alert('Erro ao atualizar registro!');
             };
         }
 
         // Fechar modal ao clicar fora dele
-        window.onclick = function(event) {
+        window.onclick = function (event) {
             const modal = document.getElementById('modalEdicao');
             if (event.target == modal) {
                 fecharModal();
             }
         }
+
+        // Função para expandir/recolher seções
+        function toggleCollapse(id) {
+            const content = document.getElementById(id);
+            const arrow = document.getElementById('arrow-' + id);
+
+            content.classList.toggle('expanded');
+            arrow.classList.toggle('expanded');
+        }
     </script>
 </body>
+
 </html>
