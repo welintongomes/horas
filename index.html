@@ -54,11 +54,17 @@
             h2 {
                 font-size: 1.2em;
             }
+
+            .form-section>div[style*="grid"] {
+                font-style: oblique;
+                /* grid-template-columns: 1fr !important; */
+                gap: 10px !important;
+            }
         }
 
         .form-section {
             background: #f8f9fa;
-            padding: 5px;
+            padding: 0px;
             border-radius: 10px;
             margin-bottom: 10px;
         }
@@ -200,7 +206,7 @@
             }
 
             .registro-detalhes {
-                font-size: 0.79em;
+                font-size: 0.85em;
                 line-height: 1.4;
             }
 
@@ -285,10 +291,10 @@
 
             .modal-content button {
                 display: inline-block;
-                width: calc(48% - 0px);
-                margin-right: 5px;
+                width: calc(50% - 3px);
+                margin-right: 6px;
                 font-size: 14px;
-                padding: 7px 7px;
+                padding: 12px 10px;
             }
 
             .modal-content button:last-child {
@@ -314,14 +320,15 @@
             color: #333;
         }
 
-        .collapsible-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            user-select: none;
-            padding: 10px 0;
-        }
+.collapsible-header {
+    display: flex;
+    cursor: pointer;
+    user-select: none;
+    padding: 1px 0;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+}
 
         .collapsible-header:hover h2 {
             color: #764ba2;
@@ -338,15 +345,17 @@
         }
 
         .collapsible-content {
-            display: none;
-            max-height: 0;
             overflow: hidden;
             transition: max-height 0.3s ease;
+            max-height: 2000px;
+        }
+
+        .collapsible-content:not(.expanded) {
+            max-height: 0;
         }
 
         .collapsible-content.expanded {
             max-height: 2000px;
-            display: block;
         }
 
         .export-buttons {
@@ -366,15 +375,21 @@
                 font-size: 13px;
                 padding: 12px 10px;
             }
+
+            .collapsible-content {
+                display: flex;
+                grid-template-columns: 2fr 1fr 1fr;
+                flex-direction: column;
+            }
         }
 
         .total-section {
             background: #fff3e0;
             padding: 15px;
             border-radius: 8px;
-            margin-top: 10px;
+            margin-top: 20px;
             text-align: center;
-            font-size: 1.3em;
+            font-size: 0.9em;
             font-weight: bold;
             color: #e65100;
         }
@@ -412,14 +427,102 @@
             color: #1565c0;
         }
 
-        input[type="number"] {
-            width: 100%;
-            padding: 5px;
-            border: 2px solid #ddd;
+        .servico-item {
+            background: #f5f5f5;
+            padding: 10px;
             border-radius: 5px;
-            font-size: 16px;
-            transition: border-color 0.3s;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 4px solid #4caf50;
+            flex-wrap: wrap;
         }
+
+        .servico-info {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .servico-descricao {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 3px;
+        }
+
+        .servico-data {
+            font-size: 0.85em;
+            color: #666;
+        }
+
+        .servico-valor {
+            color: #4caf50;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-right: 10px;
+        }
+
+        .btn-remove-servico {
+            background: #f44336;
+            padding: 6px 12px;
+            font-size: 12px;
+            margin: 0;
+        }
+
+        .btn-edit-servico {
+            background: #ff9800;
+            padding: 6px 12px;
+            font-size: 12px;
+            margin: 0 5px 0 0;
+        }
+
+        .btn-add-servico {
+            background: #4caf50;
+            margin-top: 10px;
+        }
+
+        .btn-add-servico:hover {
+            background: #45a049;
+        }
+
+        .servicos-lista {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .servico-item {
+                display: flex;
+            }
+
+            .servico-valor {
+                text-align: center;
+                margin: 8px 0;
+            }
+
+            .btn-edit-servico,
+            .btn-remove-servico {
+                display: inline-block;
+                width: calc(50% - 3px);
+                margin: 5px 0 0 0;
+                font-size: 13px;
+                padding: 10px 8px;
+            }
+
+            .btn-edit-servico {
+                margin-right: 6px;
+            }
+        }
+
+input[type="number"] {
+    width: 100%;
+    padding: 1px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
 
         input[type="number"]:focus {
             outline: none;
@@ -441,7 +544,7 @@
 
         <div class="form-section">
             <h2>💰 Configurações Financeiras</h2>
-            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; align-items: end;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px;">
                 <div class="form-group" style="margin-bottom: 0;">
                     <label for="valorHora">Valor Hora (R$):</label>
                     <input type="number" id="valorHora" step="0.01" min="0" placeholder="Ex: 13,35"
@@ -461,9 +564,41 @@
         </div>
 
         <div class="form-section">
+            <div class="collapsible-header" onclick="toggleCollapse('servicosExtras')">
+                <h2>Registrar Serviços Extras </h2>
+                <span class="arrow" id="arrow-servicosExtras">▼</span>
+            </div>
+            <div class="collapsible-content" id="servicosExtras">
+                <div style="display: flex;
+                    grid-template-columns: 2fr 1fr 1fr;
+                    /* gap: 10px; */
+                    flex-direction: column;">
+                    <div class="form-group">
+                        <label for="descricaoServico">Descrição do Serviço:</label>
+                        <input type="text" id="descricaoServico" placeholder="Ex: Polimento extra"
+                            style="padding: 10px; border: 2px solid #ddd; border-radius: 5px; font-size: 16px;">
+                    </div>
+                    <div class="form-group">
+                        <label for="dataServico">Data:</label>
+                        <input type="date" id="dataServico"
+                            style="padding: 10px; border: 2px solid #ddd; border-radius: 5px; font-size: 16px;">
+                    </div>
+                    <div class="form-group">
+                        <label for="valorServico">Valor (R$):</label>
+                        <input type="number" id="valorServico" step="0.01" min="0" placeholder="Ex: 80,00"
+                            style="padding: 10px; border: 2px solid #ddd; border-radius: 5px; font-size: 16px; font-weight: bold; color: #4caf50;">
+                    </div>
+                </div>
+                <button class="btn-add-servico" onclick="adicionarServico()">➕ Adicionar Serviço</button>
+
+                <div class="servicos-lista" id="listaServicos"></div>
+            </div>
+        </div>
+
+        <div class="form-section">
             <div class="collapsible-header" onclick="toggleCollapse('formRegistro')">
-                <h2>Registrar Novo Dia</h2>
-                <span class="arrow" id="arrow-formRegistro">▼</span>
+                <h2>Registrar Um Novo Dia </h2>
+                <span class="arrow expanded" id="arrow-formRegistro">▲</span>
             </div>
             <div class="collapsible-content" id="formRegistro">
                 <div class="form-group">
@@ -510,8 +645,9 @@
                 <input type="file" id="fileInput" accept=".txt" style="display:none;"
                     onchange="processarImportacao(event)">
 
-
+                
                 <div id="listaRegistros"></div>
+                
             </div>
         </div>
         <div class="export-buttons">
@@ -565,7 +701,8 @@
     <script>
         let db;
         let registroEditandoId = null;
-
+        let servicos = [];
+        let servicoEditandoId = null;
         // Inicializar IndexedDB
         const request = indexedDB.open('ControleHorasDB', 1);
 
@@ -577,6 +714,7 @@
             db = event.target.result;
             carregarRegistros();
             carregarUltimosValores();
+            carregarServicos();
         };
 
         request.onupgradeneeded = function (event) {
@@ -632,6 +770,158 @@
             localStorage.setItem('saldoAnterior', this.value);
             carregarRegistros(); // Atualizar exibição com novo valor
         });
+
+        // Funções de Serviços Extras
+        function carregarServicos() {
+            const servicosSalvos = localStorage.getItem('servicosExtras');
+            if (servicosSalvos) {
+                servicos = JSON.parse(servicosSalvos);
+                exibirServicos();
+            }
+        }
+
+        function salvarServicos() {
+            localStorage.setItem('servicosExtras', JSON.stringify(servicos));
+        }
+
+        function adicionarServico() {
+            // Verificar se os elementos existem primeiro
+            const descricaoEl = document.getElementById('descricaoServico');
+            const valorEl = document.getElementById('valorServico');
+            const dataEl = document.getElementById('dataServico');
+
+            if (!descricaoEl || !valorEl || !dataEl) {
+                alert('Erro ao acessar os campos. Por favor, tente novamente.');
+                return;
+            }
+
+            const descricao = descricaoEl.value.trim();
+            const valorInput = valorEl.value;
+            const valor = parseFloat(valorInput);
+            const data = dataEl.value;
+
+            if (!descricao) {
+                alert('Por favor, preencha a descrição do serviço!');
+                return;
+            }
+
+            if (!valorInput || isNaN(valor) || valor <= 0) {
+                alert('Por favor, preencha um valor válido!');
+                return;
+            }
+
+            if (!data) {
+                alert('Por favor, selecione a data do serviço!');
+                return;
+            }
+
+            const dataObj = new Date(data + 'T00:00:00');
+            const diaSemana = dataObj.toLocaleDateString('pt-BR', { weekday: 'long' });
+
+            if (servicoEditandoId) {
+                // Editando serviço existente
+                const index = servicos.findIndex(s => s.id === servicoEditandoId);
+                if (index !== -1) {
+                    servicos[index] = {
+                        id: servicoEditandoId,
+                        descricao: descricao,
+                        valor: valor,
+                        data: data,
+                        diaSemana: diaSemana
+                    };
+                }
+                servicoEditandoId = null;
+                document.querySelector('.btn-add-servico').textContent = '➕ Adicionar Serviço';
+            } else {
+                // Adicionando novo serviço
+                const servico = {
+                    id: Date.now(),
+                    descricao: descricao,
+                    valor: valor,
+                    data: data,
+                    diaSemana: diaSemana
+                };
+                servicos.push(servico);
+            }
+
+            salvarServicos();
+            exibirServicos();
+            carregarRegistros(); // Atualizar totais
+
+            // Limpar campos
+            descricaoEl.value = '';
+            valorEl.value = '';
+            dataEl.value = '';
+        }
+
+        function editarServico(id) {
+            const servico = servicos.find(s => s.id === id);
+            if (!servico) return;
+
+            // Expandir a seção se estiver recolhida
+            const content = document.getElementById('servicosExtras');
+            const arrow = document.getElementById('arrow-servicosExtras');
+            if (!content.classList.contains('expanded')) {
+                content.classList.add('expanded');
+                arrow.classList.add('expanded');
+            }
+
+            // Preencher campos
+            document.getElementById('descricaoServico').value = servico.descricao;
+            document.getElementById('valorServico').value = servico.valor;
+            document.getElementById('dataServico').value = servico.data;
+
+            // Mudar texto do botão
+            document.querySelector('.btn-add-servico').textContent = '💾 Salvar Alterações';
+            servicoEditandoId = id;
+
+            // Scroll para o formulário
+            document.getElementById('servicosExtras').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function removerServico(id) {
+            if (!confirm('Deseja realmente remover este serviço?')) return;
+
+            servicos = servicos.filter(s => s.id !== id);
+            salvarServicos();
+            exibirServicos();
+            carregarRegistros(); // Atualizar totais
+        }
+
+        function exibirServicos() {
+            const lista = document.getElementById('listaServicos');
+
+            if (servicos.length === 0) {
+                lista.innerHTML = '<p style="text-align:center; color:#999; padding:10px; font-size:0.9em;">Nenhum serviço extra cadastrado.</p>';
+                return;
+            }
+
+            // Ordenar por data (mais recente primeiro)
+            servicos.sort((a, b) => new Date(b.data) - new Date(a.data));
+
+            let html = '';
+            let totalServicos = 0;
+
+            servicos.forEach(servico => {
+                totalServicos += servico.valor;
+                const dataFormatada = new Date(servico.data + 'T00:00:00').toLocaleDateString('pt-BR');
+                html += `
+                    <div class="servico-item">
+                        <div class="servico-info">
+                            <div class="servico-descricao">${servico.descricao}</div>
+                            <div class="servico-data">📅 ${dataFormatada} - ${servico.diaSemana}</div>
+                        </div>
+                        <div class="servico-valor">R$ ${servico.valor.toFixed(2)}</div>
+                        <button class="btn-edit-servico" onclick="editarServico(${servico.id})">Editar</button>
+                        <button class="btn-remove-servico" onclick="removerServico(${servico.id})">Remover</button>
+                    </div>
+                `;
+            });
+
+            html += `<div style="text-align: right; margin-top: 10px; padding: 10px; background: #e8f5e9; border-radius: 5px; font-weight: bold; color: #2e7d32;">Total em Serviços: R$ ${totalServicos.toFixed(2)}</div>`;
+
+            lista.innerHTML = html;
+        }
 
         function timeToMinutes(time) {
             const [hours, minutes] = time.split(':').map(Number);
@@ -768,13 +1058,25 @@
             const valorTotal = (totalMinutos / 60) * valorHora;
             const valorVale = parseFloat(localStorage.getItem('valorVale')) || 0;
             const saldoAnterior = parseFloat(localStorage.getItem('saldoAnterior')) || 0;
-            const valorLiquido = valorTotal - valorVale + saldoAnterior;
+
+            // Calcular total de serviços extras
+            let totalServicos = 0;
+            servicos.forEach(s => totalServicos += s.valor);
+
+            const valorLiquido = valorTotal - valorVale + saldoAnterior + totalServicos;
 
             document.getElementById('totalHoras').style.display = 'block';
             let htmlTotal = `Total de Horas Trabalhadas: <strong>${totalFormatado}</strong> (${registros.length} dias)`;
 
             if (valorHora > 0) {
-                htmlTotal += `<div class="valor-section" style="margin-top: 10px;">💰 Total a Receber: R$ ${valorTotal.toFixed(2)}</div>`;
+                htmlTotal += `<div class="valor-section" style="margin-top: 10px;">💰 Total Horas: R$ ${valorTotal.toFixed(2)}</div>`;
+
+                if (totalServicos > 0) {
+                    htmlTotal += `<div style="background: #e8f5e9; padding: 15px; border-radius: 8px; margin-top: 10px; text-align: center; font-size: 1.1em; font-weight: bold; color: #2e7d32;">➕ Serviços Extras: R$ ${totalServicos.toFixed(2)}</div>`;
+                }
+
+                const totalReceber = valorTotal + totalServicos;
+                htmlTotal += `<div class="valor-section" style="background: #c8e6c9;">💰 Total a Receber: R$ ${totalReceber.toFixed(2)}</div>`;
 
                 if (saldoAnterior !== 0) {
                     const corSaldo = saldoAnterior > 0 ? '#1565c0' : '#c62828';
@@ -786,7 +1088,7 @@
                     htmlTotal += `<div class="vale-section">➖ Vale/Adiantamento: R$ ${valorVale.toFixed(2)}</div>`;
                 }
 
-                if (valorVale > 0 || saldoAnterior !== 0) {
+                if (valorVale > 0 || saldoAnterior !== 0 || totalServicos > 0) {
                     htmlTotal += `<div class="liquido-section">💵 Valor Líquido: R$ ${valorLiquido.toFixed(2)}</div>`;
                 }
             }
@@ -830,6 +1132,10 @@
                 const valorVale = parseFloat(localStorage.getItem('valorVale')) || 0;
                 const saldoAnterior = parseFloat(localStorage.getItem('saldoAnterior')) || 0;
 
+                // Calcular total de serviços
+                let totalServicos = 0;
+                servicos.forEach(s => totalServicos += s.valor);
+
                 let conteudo = 'CONTROLE DE CARGA HORÁRIA\n';
                 conteudo += '='.repeat(80) + '\n';
                 if (valorHora > 0) {
@@ -863,20 +1169,48 @@
                 });
 
                 const valorTotal = (totalMinutos / 60) * valorHora;
-                const valorLiquido = valorTotal - valorVale + saldoAnterior;
+                const valorLiquido = valorTotal - valorVale + saldoAnterior + totalServicos;
+                const totalReceber = valorTotal + totalServicos;
 
                 conteudo += '\n' + '='.repeat(80) + '\n';
+                conteudo += 'RESUMO FINANCEIRO\n';
+                conteudo += '='.repeat(80) + '\n';
                 conteudo += `TOTAL DE HORAS: ${minutesToTime(totalMinutos)} (${registros.length} dias)\n`;
+
                 if (valorHora > 0) {
-                    conteudo += `TOTAL A RECEBER: R$ ${valorTotal.toFixed(2)}\n`;
+                    conteudo += `VALOR DAS HORAS TRABALHADAS: R$ ${valorTotal.toFixed(2)}\n`;
+
+                    if (totalServicos > 0) {
+                        conteudo += '\n' + '-'.repeat(80) + '\n';
+                        conteudo += 'SERVIÇOS EXTRAS:\n';
+                        conteudo += '-'.repeat(80) + '\n';
+
+                        // Ordenar serviços por data
+                        const servicosOrdenados = [...servicos].sort((a, b) => new Date(a.data) - new Date(b.data));
+
+                        servicosOrdenados.forEach(s => {
+                            const dataFormatada = new Date(s.data + 'T00:00:00').toLocaleDateString('pt-BR');
+                            conteudo += `Data: ${dataFormatada} (${s.diaSemana})\n`;
+                            conteudo += `Serviço: ${s.descricao}\n`;
+                            conteudo += `Valor: R$ ${s.valor.toFixed(2)}\n`;
+                            conteudo += '-'.repeat(40) + '\n';
+                        });
+                        conteudo += `TOTAL SERVIÇOS EXTRAS: R$ ${totalServicos.toFixed(2)}\n`;
+                        conteudo += '-'.repeat(80) + '\n';
+                    }
+
+                    conteudo += `\nTOTAL A RECEBER (Horas + Serviços): R$ ${totalReceber.toFixed(2)}\n`;
+
                     if (saldoAnterior !== 0) {
                         conteudo += `SALDO ANTERIOR: R$ ${saldoAnterior.toFixed(2)}\n`;
                     }
                     if (valorVale > 0) {
                         conteudo += `VALE/ADIANTAMENTO: R$ ${valorVale.toFixed(2)}\n`;
                     }
-                    if (valorVale > 0 || saldoAnterior !== 0) {
-                        conteudo += `VALOR LÍQUIDO: R$ ${valorLiquido.toFixed(2)}\n`;
+                    if (valorVale > 0 || saldoAnterior !== 0 || totalServicos > 0) {
+                        conteudo += '\n' + '='.repeat(80) + '\n';
+                        conteudo += `VALOR LÍQUIDO FINAL: R$ ${valorLiquido.toFixed(2)}\n`;
+                        conteudo += '='.repeat(80) + '\n';
                     }
                 }
 
@@ -907,10 +1241,60 @@
                 const objectStore = transaction.objectStore('registros');
 
                 let i = 0;
+                let importandoServicos = false;
+                let servicosImportados = [];
+
                 while (i < linhas.length) {
                     const linha = linhas[i];
 
-                    if (linha.startsWith('Data: ')) {
+                    // Detectar início da seção de serviços
+                    if (linha.includes('SERVIÇOS EXTRAS:')) {
+                        importandoServicos = true;
+                        i++;
+                        continue;
+                    }
+
+                    // Detectar fim da seção de serviços
+                    if (importandoServicos && (linha.includes('TOTAL SERVIÇOS EXTRAS:') || linha.includes('TOTAL A RECEBER'))) {
+                        importandoServicos = false;
+                        i++;
+                        continue;
+                    }
+
+                    // Importar serviços
+                    if (importandoServicos && linha.startsWith('Data: ')) {
+                        try {
+                            const dataMatch = linha.match(/Data: (\d{2}\/\d{2}\/\d{4})/);
+                            const diaSemanaMatch = linha.match(/\((.+)\)/);
+                            const servicoLinha = linhas[i + 1];
+                            const valorLinha = linhas[i + 2];
+
+                            const servicoMatch = servicoLinha?.match(/Serviço: (.+)/);
+                            const valorMatch = valorLinha?.match(/Valor: R\$ ([\d,\.]+)/);
+
+                            if (dataMatch && servicoMatch && valorMatch) {
+                                const [dia, mes, ano] = dataMatch[1].split('/');
+                                const dataISO = `${ano}-${mes}-${dia}`;
+                                const valorStr = valorMatch[1].replace(',', '.');
+
+                                servicosImportados.push({
+                                    id: Date.now() + Math.random(),
+                                    descricao: servicoMatch[1],
+                                    valor: parseFloat(valorStr),
+                                    data: dataISO,
+                                    diaSemana: diaSemanaMatch ? diaSemanaMatch[1] : ''
+                                });
+                            }
+                            i += 3;
+                        } catch (error) {
+                            console.error('Erro ao importar serviço:', error);
+                            i++;
+                        }
+                        continue;
+                    }
+
+                    // Importar registros de horas
+                    if (linha.startsWith('Data: ') && !importandoServicos) {
                         try {
                             const dataMatch = linha.match(/Data: (\d{2}\/\d{2}\/\d{4})/);
                             const diaSemanaMatch = linha.match(/\((.+)\)/);
@@ -919,11 +1303,11 @@
                             const almoçoCafeLinha = linhas[i + 2];
                             const horasLinha = linhas[i + 3];
 
-                            const entradaMatch = entradaSaidaLinha.match(/Entrada: (\d{2}:\d{2})/);
-                            const saidaMatch = entradaSaidaLinha.match(/Saída: (\d{2}:\d{2})/);
-                            const almocoMatch = almoçoCafeLinha.match(/Almoço: (\d{2}:\d{2})/);
-                            const cafeMatch = almoçoCafeLinha.match(/Café: (\d{2}:\d{2})/);
-                            const horasMatch = horasLinha.match(/Horas Trabalhadas: (\d{2}:\d{2})/);
+                            const entradaMatch = entradaSaidaLinha?.match(/Entrada: (\d{2}:\d{2})/);
+                            const saidaMatch = entradaSaidaLinha?.match(/Saída: (\d{2}:\d{2})/);
+                            const almocoMatch = almoçoCafeLinha?.match(/Almoço: (\d{2}:\d{2})/);
+                            const cafeMatch = almoçoCafeLinha?.match(/Café: (\d{2}:\d{2})/);
+                            const horasMatch = horasLinha?.match(/Horas Trabalhadas: (\d{2}:\d{2})/);
 
                             if (dataMatch && entradaMatch && saidaMatch) {
                                 const [dia, mes, ano] = dataMatch[1].split('/');
@@ -955,8 +1339,15 @@
                 }
 
                 transaction.oncomplete = function () {
+                    // Adicionar serviços importados
+                    if (servicosImportados.length > 0) {
+                        servicos = [...servicos, ...servicosImportados];
+                        salvarServicos();
+                        exibirServicos();
+                    }
+
                     carregarRegistros();
-                    alert('Importação concluída com sucesso!');
+                    alert(`Importação concluída!\nRegistros: ${objectStore.count}\nServiços: ${servicosImportados.length}`);
                 };
             };
 
